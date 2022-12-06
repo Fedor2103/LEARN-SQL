@@ -1,0 +1,221 @@
+
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| learn              |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> USE LEARN
+Database changed
+mysql> SELECT* FROM COURSES
+    -> ;
++---------+--------+------+
+| FACULTY | NUMBER | ID   |
++---------+--------+------+
+| MATH    |      2 | NULL |
+| POL     |      3 | NULL |
+| FIN     |      4 | NULL |
++---------+--------+------+
+3 rows in set (0.00 sec)
+mysql> INSERT INTO COURSES (FACULTY, NUMBER, ID)
+    -> VALUES
+    -> ("BIO", 5, 1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM COURSES;
++---------+--------+------+
+| FACULTY | NUMBER | ID   |
++---------+--------+------+
+| MATH    |      2 | NULL |
+| POL     |      3 | NULL |
+| FIN     |      4 | NULL |
+| BIO     |      5 |    1 |
++---------+--------+------+
+4 rows in set (0.00 sec)
+mysql> UPDATE COURSES SET ID=2
+    -> WHERE FACULTY="MATH";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+mysql>  UPDATE COURSES SET ID=3
+    -> WHERE FACULTY="POL";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT *FROM COURSES;
++---------+--------+------+
+| FACULTY | NUMBER | ID   |
++---------+--------+------+
+| MATH    |      2 |    2 |
+| POL     |      3 |    3 |
+| FIN     |      4 | NULL |
+| BIO     |      5 |    1 |
++---------+--------+------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT DISTINCT NUMBER FROM COURSES;
++--------+
+| NUMBER |
++--------+
+|      2 |
+|      3 |
+|      4 |
+|      5 |
++--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM COURSES LIMIT (2);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(2)' at line 1
+mysql> SELECT * FROM COURSES LIMIT 2
+    -> ;
++---------+--------+------+
+| FACULTY | NUMBER | ID   |
++---------+--------+------+
+| MATH    |      2 |    2 |
+| POL     |      3 |    3 |
++---------+--------+------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM COURSES;
++---------+--------+------+
+| FACULTY | NUMBER | ID   |
++---------+--------+------+
+| MATH    |      2 |    2 |
+| POL     |      3 |    3 |
+| FIN     |      4 | NULL |
+| BIO     |      5 |    1 |
++---------+--------+------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT NUMBER AS НОМЕР FROM COURSES;
++-------+
+| НОМЕР |
++-------+
+|     2 |
+|     3 |
+|     4 |
+|     5 |
++-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT FACULTY, NUMBER FROM COURSES;
++---------+--------+
+| FACULTY | NUMBER |
++---------+--------+
+| MATH    |      2 |
+| POL     |      3 |
+| FIN     |      4 |
+| BIO     |      5 |
++---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT FACULTY, NUMBER FROM COURSES WHERE FACULTY = "BIO";
++---------+--------+
+| FACULTY | NUMBER |
++---------+--------+
+| BIO     |      5 |
++---------+--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FACULTY, NAMBER FROM COURSES WHERE NAMBER >2;
+ERROR 1054 (42S22): Unknown column 'NAMBER' in 'field list'
+mysql> SELECT FACULTY, NUMBER FROM COURSES WHERE NUMBER > 2;
++---------+--------+
+| FACULTY | NUMBER |
++---------+--------+
+| POL     |      3 |
+| FIN     |      4 |
+| BIO     |      5 |
++---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM COURSES WHERE NUMBER > 2 AND FACULTY ="FIN";
++---------+--------+------+
+| FACULTY | NUMBER | ID   |
++---------+--------+------+
+| FIN     |      4 | NULL |
++---------+--------+------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM COURSES WHERE NUMBER > 2 OR FACULTY ="FIN";
++---------+--------+------+
+| FACULTY | NUMBER | ID   |
++---------+--------+------+
+| POL     |      3 |    3 |
+| FIN     |      4 | NULL |
+| BIO     |      5 |    1 |
++---------+--------+------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM COURSES WHERE FACULTY LIKE "%O";
++---------+--------+------+
+| FACULTY | NUMBER | ID   |
++---------+--------+------+
+| BIO     |      5 |    1 |
++---------+--------+------+
+1 row in set (0.01 sec)
+
+mysql> SELECT * FROM COURSES WHERE FACULTY LIKE "_I%";
++---------+--------+------+
+| FACULTY | NUMBER | ID   |
++---------+--------+------+
+| FIN     |      4 | NULL |
+| BIO     |      5 |    1 |
++---------+--------+------+
+2 rows in set (0.00 sec)
+
+mysql>  SELECT * FROM COURSES WHERE NOT NUMBER BETWEEN 2 AND 3;
++---------+--------+------+
+| FACULTY | NUMBER | ID   |
++---------+--------+------+
+| FIN     |      4 | NULL |
+| BIO     |      5 |    1 |
++---------+--------+------+
+2 rows in set (0.00 sec)
+
+mysql> SELERCT * FROM COURSES ORDER BY FACULTY;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELERCT * FROM COURSES ORDER BY FACULTY' at line 1
+mysql> SELECT * FROM COURSES ORDER BY FACULTY;
++---------+--------+------+
+| FACULTY | NUMBER | ID   |
++---------+--------+------+
+| BIO     |      5 |    1 |
+| FIN     |      4 | NULL |
+| MATH    |      2 |    2 |
+| POL     |      3 |    3 |
++---------+--------+------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT AVG(NUMBER) FROM COURSES;
++-------------+
+| AVG(NUMBER) |
++-------------+
+|      3.5000 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT SUM (NUMBER)FROM COURSES;
+ERROR 1630 (42000): FUNCTION learn.SUM does not exist. Check the 'Function Name Parsing and Resolution' section in the Reference Manual
+mysql> SELECT SUM(NUMBER) FROM COURSES;
++-------------+
+| SUM(NUMBER) |
++-------------+
+|          14 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(FACULTY) FROM COURSES;
++----------------+
+| COUNT(FACULTY) |
++----------------+
+|              4 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql>
