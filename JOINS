@@ -1,0 +1,112 @@
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| learn              |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> USE LEARN;
+Database changed
+mysql> SHOW TABLES;
++-----------------+
+| Tables_in_learn |
++-----------------+
+| courses         |
++-----------------+
+1 row in set (0.01 sec)
+
+mysql> CREATE TABLE Persons (
+    ->     PersonID INT,
+    ->     LastName varchar(255),
+    ->     FirstName varchar(255),
+    -> AGE INT);
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> SELECT *FROM PERSONS;
+Empty set (0.01 sec)
+
+mysql> SELECT * FROM COURSES;
++---------+--------+------+
+| FACULTY | NUMBER | ID   |
++---------+--------+------+
+| MATH    |      2 |    2 |
+| POL     |      3 |    3 |
+| FIN     |      4 | NULL |
+| BIO     |      5 |    1 |
++---------+--------+------+
+4 rows in set (0.00 sec)
+mysql> INSERT INTO PERSONS
+    ->  VALUES (1, "KHALABUR", "FEDOR", 19);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO PERSONS
+    -> VALUES (2, "IVANOV", "PETR", 35);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO PERSONS
+    -> VALUES (3, "PETROV", "IVAN", 47);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO PERSONS
+    -> VALUES (4,"PTROVA", "EKATERINA",20 );
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM PERSONS;
++----------+----------+-----------+------+
+| PersonID | LastName | FirstName | AGE  |
++----------+----------+-----------+------+
+|        1 | KHALABUR | FEDOR     |   19 |
+|        2 | IVANOV   | PETR      |   35 |
+|        3 | PETROV   | IVAN      |   47 |
+|        4 | PTROVA   | EKATERINA |   20 |
++----------+----------+-----------+------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT* FROM COURSES
+    -> ;
++---------+--------+------+
+| FACULTY | NUMBER | ID   |
++---------+--------+------+
+| MATH    |      2 |    2 |
+| POL     |      3 |    3 |
+| FIN     |      4 | NULL |
+| BIO     |      5 |    1 |
++---------+--------+------+
+4 rows in set (0.00 sec)
+mysql>  SELECT COURSES.FACULTY, PERSONS.FIRSTNAME, PERSONS.LASTNAME
+    -> FROM COURSES JOIN PERSONS ON COURSES.ID = PERSONS.PERSONID;
++---------+-----------+----------+
+| FACULTY | FIRSTNAME | LASTNAME |
++---------+-----------+----------+
+| BIO     | FEDOR     | KHALABUR |
+| MATH    | PETR      | IVANOV   |
+| POL     | IVAN      | PETROV   |
++---------+-----------+----------+
+3 rows in set (0.01 sec)
+
+mysql> SELECT COURSES.NUMBER, PERSONS.LASTNAME, PERSONS.FIRSTNAME FROM COURSES LEFT JOIN PERSONS ON COURSES.ID = PERSONS.PERSONID;
++--------+----------+-----------+
+| NUMBER | LASTNAME | FIRSTNAME |
++--------+----------+-----------+
+|      2 | IVANOV   | PETR      |
+|      3 | PETROV   | IVAN      |
+|      4 | NULL     | NULL      |
+|      5 | KHALABUR | FEDOR     |
++--------+----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT COURSES.NUMBER, PERSONS.LASTNAME, PERSONS.FIRSTNAME FROM COURSES RIGHT JOIN PERSONS ON COURSES.ID = PERSONS.PERSONID;
++--------+----------+-----------+
+| NUMBER | LASTNAME | FIRSTNAME |
++--------+----------+-----------+
+|      5 | KHALABUR | FEDOR     |
+|      2 | IVANOV   | PETR      |
+|      3 | PETROV   | IVAN      |
+|   NULL | PTROVA   | EKATERINA |
++--------+----------+-----------+
+4 rows in set (0.00 sec)
